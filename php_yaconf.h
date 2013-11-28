@@ -79,6 +79,9 @@ PHP_MINFO_FUNCTION(yaconf);
 ZEND_BEGIN_MODULE_GLOBALS(yaconf)
 	HashTable        *configs;
   zend_bool        cache_config;
+  zval        *active_ini_file_section;
+        zval        *ini_wanted_section;
+        uint        parsing_flag;
 ZEND_END_MODULE_GLOBALS(yaconf)
 
 /* In every utility function you add that needs to use variables 
