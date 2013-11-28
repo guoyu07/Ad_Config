@@ -36,9 +36,6 @@ extern zend_module_entry yaconf_module_entry;
 #include "TSRM.h"
 #endif
 
-#define YACONF_EXTRACT_FUNC_NAME                        "extract"
-#define YACONF_CONFIG_PROPERT_NAME                      "_config"
-#define YACONF_CONFIG_PROPERT_NAME_READONLY             "_readonly"
 
 #if ((PHP_MAJOR_VERSION == 5) && (PHP_MINOR_VERSION < 3)) || (PHP_MAJOR_VERSION < 5)
   #define Z_SET_REFCOUNT_P(pz, rc)      (pz)->refcount = rc
@@ -47,26 +44,6 @@ extern zend_module_entry yaconf_module_entry;
   #define Z_REFCOUNT_P                  ZVAL_REFCOUNT
   #define Z_DELREF_P                    ZVAL_DELREF
 #endif
-
-struct _yaconf_config_cache {
-        long ctime;
-        HashTable *data;
-};
-
-typedef struct _yaconf_config_cache yaconf_config_cache;
-
-extern zend_class_entry *yaf_config_ce;
-
-yaf_config_t * yaconf_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC);
-void yaconf_unserialize(zval *self, HashTable *data TSRMLS_DC);
-
-#ifndef pestrndup
-/* before php-5.2.4, pestrndup is not defined */
-#define pestrndup(s, length, persistent) ((persistent)?zend_strndup((s),(length)):estrndup((s),(length)))
-#endif
-
-ZEND_MINIT_FUNCTION(yaconf);
-
 
 
 PHP_MINIT_FUNCTION(yaconf);
@@ -79,9 +56,9 @@ PHP_MINFO_FUNCTION(yaconf);
 ZEND_BEGIN_MODULE_GLOBALS(yaconf)
 	HashTable        *configs;
   zend_bool        cache_config;
-  zval        *active_ini_file_section;
-        zval        *ini_wanted_section;
-        uint        parsing_flag;
+  zval             *active_ini_file_section;
+  zval             *ini_wanted_section;
+  uint             parsing_flag;
 ZEND_END_MODULE_GLOBALS(yaconf)
 
 /* In every utility function you add that needs to use variables 
@@ -99,6 +76,8 @@ ZEND_END_MODULE_GLOBALS(yaconf)
 #else
 #define YACONF_G(v) (yaconf_globals.v)
 #endif
+
+extern ZEND_DECLARE_MODULE_GLOBALS(yaconf);
 
 #endif	/* PHP_YACONF_H */
 

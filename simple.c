@@ -88,7 +88,7 @@ zval * yaconf_simple_instance(zval *this_ptr, zval *values, zval *readonly TSRML
             return instance;
         break;
         default:
-            yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Invalid parameters provided, must be an array");
+            // yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Invalid parameters provided, must be an array");
             return NULL;
     }
 }

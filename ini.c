@@ -615,18 +615,18 @@ zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section_name TS
 #endif
                     {
                         zval_ptr_dtor(&configs);
-                        yaf_trigger_error(E_ERROR TSRMLS_CC, "Parsing ini file '%s' failed", ini_file);
+                        // yaf_trigger_error(E_ERROR TSRMLS_CC, "Parsing ini file '%s' failed", ini_file);
                         return NULL;
                     }
                 }
             } else {
                 zval_ptr_dtor(&configs);
-                yaf_trigger_error(E_ERROR TSRMLS_CC, "Argument is not a valid ini file '%s'", ini_file);
+                // yaf_trigger_error(E_ERROR TSRMLS_CC, "Argument is not a valid ini file '%s'", ini_file);
                 return NULL;
             }
         } else {
             zval_ptr_dtor(&configs);
-            yaf_trigger_error(E_ERROR TSRMLS_CC, "Unable to find config file '%s'", ini_file);
+            // yaf_trigger_error(E_ERROR TSRMLS_CC, "Unable to find config file '%s'", ini_file);
             return NULL;
         }
 
@@ -636,7 +636,7 @@ zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section_name TS
             if (zend_symtable_find(Z_ARRVAL_P(configs),
                         Z_STRVAL_P(section_name), Z_STRLEN_P(section_name) + 1, (void **)&section) == FAILURE) {
                 zval_ptr_dtor(&configs);
-                yaf_trigger_error(E_ERROR TSRMLS_CC, "There is no section '%s' in '%s'", Z_STRVAL_P(section_name), ini_file);
+                // yaf_trigger_error(E_ERROR TSRMLS_CC, "There is no section '%s' in '%s'", Z_STRVAL_P(section_name), ini_file);
                 return NULL;
             }
             INIT_PZVAL(&tmp);
@@ -659,7 +659,7 @@ zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section_name TS
 
         return instance;
     } else {
-        yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Invalid parameters provided, must be path of ini file");
+        // yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Invalid parameters provided, must be path of ini file");
         return NULL;
     }
 }
@@ -906,12 +906,12 @@ ZEND_MINIT_FUNCTION(yaconf_ini) {
     yaconf_ini_ce = zend_register_internal_class_ex(&ce, yaconf_ce, NULL TSRMLS_CC);
 
 #ifdef HAVE_SPL
-    zend_class_implements(yaf_config_ini_ce TSRMLS_CC, 3, zend_ce_iterator, zend_ce_arrayaccess, spl_ce_Countable);
+    zend_class_implements(yaconf_ini_ce TSRMLS_CC, 3, zend_ce_iterator, zend_ce_arrayaccess, spl_ce_Countable);
 #else
-    zend_class_implements(yaf_config_ini_ce TSRMLS_CC, 2, zend_ce_iterator, zend_ce_arrayaccess);
+    zend_class_implements(yaconf_ini_ce TSRMLS_CC, 2, zend_ce_iterator, zend_ce_arrayaccess);
 #endif
 
-    yaf_config_ini_ce->ce_flags |= ZEND_ACC_FINAL_CLASS;
+    yaconf_ini_ce->ce_flags |= ZEND_ACC_FINAL_CLASS;
 
     return SUCCESS;
 }

@@ -59,5 +59,5 @@ if test "$PHP_YACONF" != "no"; then
   dnl
   dnl PHP_SUBST(YACONF_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(yaconf, yaconf.c, $ext_shared)
+  PHP_NEW_EXTENSION(yaconf, yaconf.c, abstract.c, ini.c, simple.c, $ext_shared)
 fi
