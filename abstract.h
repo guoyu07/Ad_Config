@@ -18,29 +18,29 @@
 
 /* $Id$ */
 
-#ifndef YACONF_ABSTRACT_H
-#define YACONF_ABSTRACT_H
+#ifndef AD_CONFIG_ABSTRACT_H
+#define AD_CONFIG_ABSTRACT_H
 
-#define YACONF_EXTRACT_FUNC_NAME                        "extract"
-#define YACONF_PROPERT_NAME                      "_config"
-#define YACONF_PROPERT_NAME_READONLY             "_readonly"
+#define AD_CONFIG_EXTRACT_FUNC_NAME                        "extract"
+#define AD_CONFIG_PROPERT_NAME                      "_config"
+#define AD_CONFIG_PROPERT_NAME_READONLY             "_readonly"
 
-struct _yaconf_cache {
+struct _ad_config_cache {
         long ctime;
         HashTable *data;
 };
 
-typedef struct _yaconf_cache yaconf_cache;
+typedef struct _ad_config_cache ad_config_cache;
 
-extern zend_class_entry *yaconf_abstract_ce;
+extern zend_class_entry *ad_config_abstract_ce;
 
-zval * yaconf_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC);
-void yaconf_unserialize(zval *self, HashTable *data TSRMLS_DC);
+zval * ad_config_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC);
+void ad_config_unserialize(zval *self, HashTable *data TSRMLS_DC);
 
 #ifndef pestrndup
 /* before php-5.2.4, pestrndup is not defined */
 #define pestrndup(s, length, persistent) ((persistent)?zend_strndup((s),(length)):estrndup((s),(length)))
 #endif
 
-ZEND_MINIT_FUNCTION(yaconf_abstract);
+ZEND_MINIT_FUNCTION(ad_config_abstract);
 #endif

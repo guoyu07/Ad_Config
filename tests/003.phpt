@@ -1,16 +1,16 @@
 --TEST--
-Check for Yaconf_Ini
+Check for Ad_Config_Ini
 --SKIPIF--
-<?php if (!extension_loaded("yaconf")) print "skip"; ?>
+<?php if (!extension_loaded("ad_config")) print "skip"; ?>
 --FILE--
 <?php 
 $file = dirname(__FILE__) . "/simple.ini";
 
-$config = new Yaconf_Ini($file);
+$config = new Ad_Config_Ini($file);
 print_r($config);
-$config = new Yaconf_Ini($file, "extra");
+$config = new Ad_Config_Ini($file, "extra");
 print_r($config);
-$config = new Yaconf_Ini($file);
+$config = new Ad_Config_Ini($file);
 $config->longtime = 23424234324;
 var_dump($config->readonly());
 
@@ -18,7 +18,7 @@ foreach($config as $key => $value) {
     print_r($key);
 }
 
-$sick = @new Yaconf_Ini();
+$sick = @new Ad_Config_Ini();
 
 var_dump($sick->__isset(1));
 var_dump($sick->__get(1));
@@ -27,7 +27,7 @@ $sick->total = 1;
 var_dump(count($sick));
 ?>
 --EXPECTF--
-Yaconf_Ini Object
+Ad_Config_Ini Object
 (
     [_config:protected] => Array
         (
@@ -318,7 +318,7 @@ Yaconf_Ini Object
 
     [_readonly:protected] => 1
 )
-Yaconf_Ini Object
+Ad_Config_Ini Object
 (
     [_config:protected] => Array
         (

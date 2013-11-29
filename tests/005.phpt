@@ -1,15 +1,15 @@
 --TEST--
-Bug Yaconf_Ini crash due to inaccurate refcount
+Bug Ad_Config_Ini crash due to inaccurate refcount
 --SKIPIF--
-<?php if (!extension_loaded("yaconf")) print "skip"; ?>
+<?php if (!extension_loaded("ad_config")) print "skip"; ?>
 --FILE--
 <?php 
 $file = dirname(__FILE__) . "/simple.ini";
-$config = new Yaconf_Ini($file, 'base');
+$config = new Ad_Config_Ini($file, 'base');
 print_r($config);
 ?>
 --EXPECTF--
-Yaconf_Ini Object
+Ad_Config_Ini Object
 (
     [_config:protected] => Array
         (

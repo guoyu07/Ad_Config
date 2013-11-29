@@ -2,12 +2,12 @@
 // vim:ft=javascript
 
 // If your extension references something external, use ARG_WITH
-// ARG_WITH("yaconf", "for yaconf support", "no");
+// ARG_WITH("ad_config", "for ad_config support", "no");
 
 // Otherwise, use ARG_ENABLE
-// ARG_ENABLE("yaconf", "enable yaconf support", "no");
+// ARG_ENABLE("ad_config", "enable ad_config support", "no");
 
 if (PHP_YACONF != "no") {
-	EXTENSION("yaconf", "yaconf.c");
+	EXTENSION("ad_config", "ad_config.c");
 }
 

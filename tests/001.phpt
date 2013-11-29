@@ -1,10 +1,10 @@
 --TEST--
-Check for yaconf presence
+Check for ad_config presence
 --SKIPIF--
-<?php if (!extension_loaded("yaconf")) print "skip"; ?>
+<?php if (!extension_loaded("ad_config")) print "skip"; ?>
 --FILE--
 <?php 
-echo "yaconf extension is available";
+echo "ad_config extension is available";
 /*
 	you can add regression tests for your extension here
 
@@ -18,4 +18,4 @@ echo "yaconf extension is available";
 */
 ?>
 --EXPECT--
-yaconf extension is available
+ad_config extension is available

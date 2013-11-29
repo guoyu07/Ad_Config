@@ -1,7 +1,7 @@
 --TEST--
-Check for yaconf.system settings
+Check for ad_config.system settings
 --SKIPIF--
-<?php if (!extension_loaded("yaconf")) print "skip"; ?>
+<?php if (!extension_loaded("ad_config")) print "skip"; ?>
 --INI--
 yaf.cache_config=0
 yaf.environ="product"

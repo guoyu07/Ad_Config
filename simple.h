@@ -18,14 +18,14 @@
 
 /* $Id$ */
 
-#ifndef YACONF_SIMPLE_H
-#define YACONF_SIMPLE_H
+#ifndef AD_CONFIG_SIMPLE_H
+#define AD_CONFIG_SIMPLE_H
 
-extern zend_class_entry *yaconf_simple_ce;
+extern zend_class_entry *ad_config_simple_ce;
 
-zval * yaconf_simple_instance(zval *this_ptr, zval *values, zval *readonly TSRMLS_DC);
+zval * ad_config_simple_instance(zval *this_ptr, zval *values, zval *readonly TSRMLS_DC);
 
-ZEND_MINIT_FUNCTION(yaconf_simple);
+ZEND_MINIT_FUNCTION(ad_config_simple);
 
 #endif
 /*

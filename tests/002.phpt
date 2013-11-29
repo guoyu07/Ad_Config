@@ -1,7 +1,7 @@
 --TEST--
-Check for Yaconf_Simple
+Check for Ad_Config_Simple
 --SKIPIF--
-<?php if (!extension_loaded("yaconf")) print "skip"; ?>
+<?php if (!extension_loaded("ad_config")) print "skip"; ?>
 --FILE--
 <?php 
 $config = array(
@@ -12,13 +12,13 @@ $config = array(
     'section2' => "laruence",
 );
 
-$config1 = new Yaconf_Simple($config, 'section2');
+$config1 = new Ad_Config_Simple($config, 'section2');
 print_r($config1);
-$config2 = new Yaconf_Simple($config, 'section1');
+$config2 = new Ad_Config_Simple($config, 'section1');
 var_dump($config2->readonly());
 $config2->new = "value";
 var_dump(isset($config->new));
-$config3 = new Yaconf_Simple($config);
+$config3 = new Ad_Config_Simple($config);
 unset($config);
 
 echo "Isset config3 section:";
@@ -36,7 +36,7 @@ foreach($config3 as $key => $val) {
 
 print_r($config3->toArray());
 
-$sick = @new Yaconf_Simple();
+$sick = @new Ad_Config_Simple();
 
 var_dump($sick->__isset(1));
 var_dump($sick->__get(2));
@@ -45,7 +45,7 @@ var_dump(count($sick));
 var_dump($sick->total);
 ?>
 --EXPECTF--
-Yaconf_Simple Object
+Ad_Config_Simple Object
 (
     [_config:protected] => Array
         (
@@ -64,7 +64,7 @@ bool(true)
 bool(false)
 Isset config3 section:bool(true)
 Config3 readonly:bool(false)
-section1=>Yaconf_Simple Object
+section1=>Ad_Config_Simple Object
 (
     [_config:protected] => Array
         (

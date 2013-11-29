@@ -18,18 +18,18 @@
 
 /* $Id$ */
 
-#ifndef YACONF_INI_H
-#define YACONF_INI_H
+#ifndef AD_CONFIG_INI_H
+#define AD_CONFIG_INI_H
 
-#define YACONF_INI_PARSING_START   0
-#define YACONF_INI_PARSING_PROCESS 1
-#define YACONF_INI_PARSING_END     2
+#define AD_CONFIG_INI_PARSING_START   0
+#define AD_CONFIG_INI_PARSING_PROCESS 1
+#define AD_CONFIG_INI_PARSING_END     2
 
-extern zend_class_entry *yaconf_ini_ce;
+extern zend_class_entry *ad_config_ini_ce;
 
-zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section TSRMLS_DC);
+zval * ad_config_ini_instance(zval *this_ptr, zval *filename, zval *section TSRMLS_DC);
 
-ZEND_MINIT_FUNCTION(yaconf_ini);
+ZEND_MINIT_FUNCTION(ad_config_ini);
 
 #endif
 /*
