@@ -89,7 +89,7 @@ zval * yaconf_simple_instance(zval *this_ptr, zval *values, zval *readonly TSRML
             return instance;
         break;
         default:
-            // yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Invalid parameters provided, must be an array");
+            php_error_docref(NULL TSRMLS_CC, E_ERROR, "Invalid parameters provided, must be an array");
             return NULL;
     }
 }
@@ -121,7 +121,7 @@ PHP_METHOD(yaconf_simple, __construct) {
         return;
     }
 
-    (void)yaf_config_simple_instance(getThis(), values, readonly TSRMLS_CC);
+    (void)yaconf_simple_instance(getThis(), values, readonly TSRMLS_CC);
 }
 /** }}} */
 

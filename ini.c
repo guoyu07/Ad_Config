@@ -549,7 +549,7 @@ static void yaconf_ini_parser_cb(zval *key, zval *value, int callback_type, zval
         }
         zend_symtable_update(Z_ARRVAL_P(arr), skey, skey_len + 1, &YACONF_G(active_ini_file_section), sizeof(zval *), NULL);
         if (YACONF_G(ini_wanted_section) && Z_STRLEN_P(YACONF_G(ini_wanted_section)) == skey_len
-                && !strncasecmp(Z_STRVAL_P(YACONF_G(ini_wanted_section)), skey, Z_STRLEN_P(YAF_G(ini_wanted_section)))) {
+                && !strncasecmp(Z_STRVAL_P(YACONF_G(ini_wanted_section)), skey, Z_STRLEN_P(YACONF_G(ini_wanted_section)))) {
             YACONF_G(parsing_flag) = YACONF_INI_PARSING_PROCESS;
         }
         efree(skey_orig);
@@ -616,18 +616,18 @@ zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section_name TS
 #endif
                     {
                         zval_ptr_dtor(&configs);
-                        // yaf_trigger_error(E_ERROR TSRMLS_CC, "Parsing ini file '%s' failed", ini_file);
+                        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Parsing ini file '%s' failed", ini_file);
                         return NULL;
                     }
                 }
             } else {
                 zval_ptr_dtor(&configs);
-                // yaf_trigger_error(E_ERROR TSRMLS_CC, "Argument is not a valid ini file '%s'", ini_file);
+                php_error_docref(NULL TSRMLS_CC, E_ERROR, "Argument is not a valid ini file '%s'", ini_file);
                 return NULL;
             }
         } else {
             zval_ptr_dtor(&configs);
-            // yaf_trigger_error(E_ERROR TSRMLS_CC, "Unable to find config file '%s'", ini_file);
+            php_error_docref(NULL TSRMLS_CC, E_ERROR, "Unable to find config file '%s'", ini_file);
             return NULL;
         }
 
@@ -637,7 +637,7 @@ zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section_name TS
             if (zend_symtable_find(Z_ARRVAL_P(configs),
                         Z_STRVAL_P(section_name), Z_STRLEN_P(section_name) + 1, (void **)&section) == FAILURE) {
                 zval_ptr_dtor(&configs);
-                // yaf_trigger_error(E_ERROR TSRMLS_CC, "There is no section '%s' in '%s'", Z_STRVAL_P(section_name), ini_file);
+                php_error_docref(NULL TSRMLS_CC, E_ERROR, "There is no section '%s' in '%s'", Z_STRVAL_P(section_name), ini_file);
                 return NULL;
             }
             INIT_PZVAL(&tmp);
@@ -660,7 +660,7 @@ zval * yaconf_ini_instance(zval *this_ptr, zval *filename, zval *section_name TS
 
         return instance;
     } else {
-        // yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Invalid parameters provided, must be path of ini file");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Invalid parameters provided, must be path of ini file");
         return NULL;
     }
 }

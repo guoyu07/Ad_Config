@@ -18,7 +18,7 @@ zend_class_entry *yaconf_abstract_ce;
 
 /* {{{ ARG_INFO
  */
-ZEND_BEGIN_ARG_INFO_EX(yaf_config_void_arginfo, 0, 0, 0)
+ZEND_BEGIN_ARG_INFO_EX(yaconf_void_arginfo, 0, 0, 0)
 ZEND_END_ARG_INFO()
 /* }}} */
 
@@ -201,7 +201,7 @@ static zval * yaconf_ini_zval_losable(zval *zvalue TSRMLS_DC) {
                 case IS_CONSTANT_ARRAY: {
                         HashTable *original_ht = zvalue->value.ht;
                         array_init(ret);
-                        yaf_config_copy_losable(Z_ARRVAL_P(ret), original_ht TSRMLS_CC);
+                        yaconf_copy_losable(Z_ARRVAL_P(ret), original_ht TSRMLS_CC);
                 }
                         break;
         }
@@ -285,7 +285,7 @@ static void yaconf_ini_serialize(zval *this_ptr, zval *filename, zval *section T
         cache->data  = persistent;
         len = spprintf(&key, 0, "%s#%s", Z_STRVAL_P(filename), Z_STRVAL_P(section));
 
-        zend_hash_update(YAF_G(configs), key, len + 1, (void **)&cache, sizeof(yaconf_cache *), NULL);
+        zend_hash_update(YACONF_G(configs), key, len + 1, (void **)&cache, sizeof(yaconf_cache *), NULL);
 
         efree(key);
 }
@@ -293,7 +293,7 @@ static void yaconf_ini_serialize(zval *this_ptr, zval *filename, zval *section T
 
 /** {{{ zval * yaconf_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC)
  */
-zval * yaf_config_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC) {
+zval * yaconf_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC) {
         zval *instance;
 
         if (!arg1) {
@@ -320,7 +320,7 @@ zval * yaf_config_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC) {
 
                         return instance;
                 }
-                // yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Expects a path to *.ini configuration file as parameter");
+                php_error_docref(NULL TSRMLS_CC, E_ERROR, "Expects a path to *.ini configuration file as parameter");
                 return NULL;
         }
 
@@ -334,7 +334,7 @@ zval * yaf_config_instance(zval *this_ptr, zval *arg1, zval *arg2 TSRMLS_DC) {
                 return instance;
         }
 
-        // yaf_trigger_error(YAF_ERR_TYPE_ERROR TSRMLS_CC, "Expects a string or an array as parameter");
+        php_error_docref(NULL TSRMLS_CC, E_ERROR, "Expects a string or an array as parameter");
         return NULL;
 }
 /* }}} */
@@ -350,7 +350,7 @@ zend_function_entry yaconf_methods[] = {
 };
 /* }}} */
 
-/** {{{ YAF_STARTUP_FUNCTION
+/** {{{ ZEND_MINIT_FUNCTION
 */
 ZEND_MINIT_FUNCTION(yaconf_abstract) {
         zend_class_entry ce;
