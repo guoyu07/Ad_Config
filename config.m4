@@ -14,7 +14,7 @@ dnl [  --with-yaconf             Include yaconf support])
 dnl Otherwise use enable:
 
 PHP_ARG_ENABLE(yaconf, whether to enable yaconf support,
-Make sure that the comment is aligned:
+dnl Make sure that the comment is aligned:
 [  --enable-yaconf           Enable yaconf support])
 
 if test "$PHP_YACONF" != "no"; then
@@ -59,5 +59,5 @@ if test "$PHP_YACONF" != "no"; then
   dnl
   dnl PHP_SUBST(YACONF_SHARED_LIBADD)
 
-  PHP_NEW_EXTENSION(yaconf, yaconf.c, abstract.c, ini.c, simple.c, $ext_shared)
+  PHP_NEW_EXTENSION(yaconf, yaconf.c abstract.c ini.c simple.c, $ext_shared)
 fi

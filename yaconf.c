@@ -24,13 +24,13 @@
 
 #include "php.h"
 #include "php_ini.h"
-
+#include "ext/standard/info.h"
 #include "php_yaconf.h"
+
 #include "abstract.h"
 
 
-ZEND_DECLARE_MODULE_GLOBALS(yaconf);
-
+ZEND_DECLARE_MODULE_GLOBALS(yaconf)
 
 /* True global resources - no need for thread safety here */
 static int le_yaconf;
@@ -40,59 +40,9 @@ static int le_yaconf;
  * Every user visible function must have an entry in yaconf_functions[].
  */
 const zend_function_entry yaconf_functions[] = {
-	PHP_FE_END	/* Must be the last line in yaconf_functions[] */
+	{NULL, NULL, NULL}
 };
 /* }}} */
-
-/** {{{ module depends
- */
-#if ZEND_MODULE_API_NO >= 20050922
-zend_module_dep yaconf_deps[] = {
-        ZEND_MOD_REQUIRED("spl")
-        ZEND_MOD_REQUIRED("pcre")
-        {NULL, NULL, NULL}
-};
-#endif
-/* }}} */
-
-/** {{{ PHP_GINIT_FUNCTION
-*/
-PHP_GINIT_FUNCTION(yaconf)
-{
-        yaconf_globals->configs = NULL;
-}
-/* }}} */
-
-/* {{{ yaconf_module_entry
- */
-zend_module_entry yaconf_module_entry = {
-#if ZEND_MODULE_API_NO >= 20050922
-        STANDARD_MODULE_HEADER_EX, NULL,
-        yaconf_deps,
-#else
-        STANDARD_MODULE_HEADER,
-#endif
-	"yaconf",
-	yaconf_functions,
-	PHP_MINIT(yaconf),
-	PHP_MSHUTDOWN(yaconf),
-	PHP_RINIT(yaconf),		/* Replace with NULL if there's nothing to do at request start */
-	PHP_RSHUTDOWN(yaconf),	/* Replace with NULL if there's nothing to do at request end */
-	PHP_MINFO(yaconf),
-#if ZEND_MODULE_API_NO >= 20010901
-	"0.1", /* Replace with version number for your extension */
-#endif
-    PHP_MODULE_GLOBALS(yaconf),
-    PHP_GINIT(yaconf),
-    NULL,
-    NULL,
-    STANDARD_MODULE_PROPERTIES_EX
-};
-/* }}} */
-
-#ifdef COMPILE_DL_YACONF
-ZEND_GET_MODULE(yaconf)
-#endif
 
 /* {{{ PHP_INI
  */
@@ -101,16 +51,14 @@ PHP_INI_BEGIN()
 PHP_INI_END()
 /* }}} */
 
-/* {{{ php_yaconf_init_globals
- */
-/* Uncomment this function if you have INI entries
-static void php_yaconf_init_globals(zend_yaconf_globals *yaconf_globals)
-{
-	yaconf_globals->global_value = 0;
-	yaconf_globals->global_string = NULL;
-}
+/** {{{ PHP_GINIT_FUNCTION
 */
+PHP_GINIT_FUNCTION(yaconf)
+{
+    yaconf_globals->configs = NULL;
+}
 /* }}} */
+
 
 /* {{{ PHP_MINIT_FUNCTION
  */
@@ -135,7 +83,7 @@ PHP_MSHUTDOWN_FUNCTION(yaconf)
         pefree(YACONF_G(configs), 1);
     }
 
-	return SUCCESS;
+    return SUCCESS;
 }
 /* }}} */
 
@@ -168,6 +116,50 @@ PHP_MINFO_FUNCTION(yaconf)
 	DISPLAY_INI_ENTRIES();
 }
 /* }}} */
+
+#ifdef COMPILE_DL_YACONF
+ZEND_GET_MODULE(yaconf)
+#endif
+
+/** {{{ module depends
+ */
+#if ZEND_MODULE_API_NO >= 20050922
+zend_module_dep yaconf_deps[] = {
+        ZEND_MOD_REQUIRED("spl")
+        ZEND_MOD_REQUIRED("pcre")
+        {NULL, NULL, NULL}
+};
+#endif
+/* }}} */
+
+/* {{{ yaconf_module_entry
+ */
+zend_module_entry yaconf_module_entry = {
+#if ZEND_MODULE_API_NO >= 20050922
+        STANDARD_MODULE_HEADER_EX, NULL,
+        yaconf_deps,
+#else
+        STANDARD_MODULE_HEADER,
+#endif
+    "yaconf",
+    yaconf_functions,
+    PHP_MINIT(yaconf),
+    PHP_MSHUTDOWN(yaconf),
+    PHP_RINIT(yaconf),      /* Replace with NULL if there's nothing to do at request start */
+    PHP_RSHUTDOWN(yaconf),  /* Replace with NULL if there's nothing to do at request end */
+    PHP_MINFO(yaconf),
+#if ZEND_MODULE_API_NO >= 20010901
+    "0.1", /* Replace with version number for your extension */
+#endif
+    PHP_MODULE_GLOBALS(yaconf),
+    PHP_GINIT(yaconf),
+    NULL,
+    NULL,
+    STANDARD_MODULE_PROPERTIES_EX
+};
+/* }}} */
+
+
 
 /*
  * Local variables:

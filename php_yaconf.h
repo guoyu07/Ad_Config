@@ -36,14 +36,24 @@ extern zend_module_entry yaconf_module_entry;
 #include "TSRM.h"
 #endif
 
+#if ((PHP_MAJOR_VERSION == 5) && (PHP_MINOR_VERSION > 2)) || (PHP_MAJOR_VERSION > 5)
+#else
+#define Z_SET_REFCOUNT_P(pz, rc)      (pz)->refcount = rc
+#define Z_SET_REFCOUNT_PP(ppz, rc)    Z_SET_REFCOUNT_P(*(ppz), rc)
+#define Z_ADDREF_P          ZVAL_ADDREF
+#define Z_REFCOUNT_P ZVAL_REFCOUNT
+#define Z_DELREF_P          ZVAL_DELREF
+#endif   
 
-#if ((PHP_MAJOR_VERSION == 5) && (PHP_MINOR_VERSION < 3)) || (PHP_MAJOR_VERSION < 5)
-  #define Z_SET_REFCOUNT_P(pz, rc)      (pz)->refcount = rc
-  #define Z_SET_REFCOUNT_PP(ppz, rc)    Z_SET_REFCOUNT_P(*(ppz), rc)
-  #define Z_ADDREF_P                    ZVAL_ADDREF
-  #define Z_REFCOUNT_P                  ZVAL_REFCOUNT
-  #define Z_DELREF_P                    ZVAL_DELREF
-#endif
+ZEND_BEGIN_MODULE_GLOBALS(yaconf)
+  zval        *active_ini_file_section;
+        zval        *ini_wanted_section;
+        uint        parsing_flag;
+        zend_bool         cache_config;
+        HashTable        *configs;
+ZEND_END_MODULE_GLOBALS(yaconf)
+
+extern ZEND_DECLARE_MODULE_GLOBALS(yaconf);
 
 
 PHP_MINIT_FUNCTION(yaconf);
@@ -51,33 +61,14 @@ PHP_MSHUTDOWN_FUNCTION(yaconf);
 PHP_RINIT_FUNCTION(yaconf);
 PHP_RSHUTDOWN_FUNCTION(yaconf);
 PHP_MINFO_FUNCTION(yaconf);
-  
 
-ZEND_BEGIN_MODULE_GLOBALS(yaconf)
-	HashTable        *configs;
-  zend_bool        cache_config;
-  zval             *active_ini_file_section;
-  zval             *ini_wanted_section;
-  uint             parsing_flag;
-ZEND_END_MODULE_GLOBALS(yaconf)
 
-/* In every utility function you add that needs to use variables 
-   in php_yaconf_globals, call TSRMLS_FETCH(); after declaring other 
-   variables used by that function, or better yet, pass in TSRMLS_CC
-   after the last function argument and declare your utility function
-   with TSRMLS_DC after the last declared argument.  Always refer to
-   the globals in your function as YACONF_G(variable).  You are 
-   encouraged to rename these macros something shorter, see
-   examples in any other php module directory.
-*/
 
 #ifdef ZTS
 #define YACONF_G(v) TSRMG(yaconf_globals_id, zend_yaconf_globals *, v)
 #else
 #define YACONF_G(v) (yaconf_globals.v)
 #endif
-
-extern ZEND_DECLARE_MODULE_GLOBALS(yaconf);
 
 #endif	/* PHP_YACONF_H */
 

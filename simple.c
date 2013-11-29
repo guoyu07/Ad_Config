@@ -27,6 +27,7 @@
 
 #include "php_yaconf.h"
 
+#include "abstract.h"
 #include "simple.h"
 
 zend_class_entry *yaconf_simple_ce;
@@ -368,7 +369,7 @@ ZEND_MINIT_FUNCTION(yaconf_simple) {
     zend_class_entry ce;
 
     INIT_CLASS_ENTRY(ce, "Yaconf_Simple", yaconf_simple_methods);
-    yaconf_simple_ce = zend_register_internal_class_ex(&ce, yaconf_ce, NULL TSRMLS_CC);
+    yaconf_simple_ce = zend_register_internal_class_ex(&ce, yaconf_abstract_ce, NULL TSRMLS_CC);
 
 #ifdef HAVE_SPL
     zend_class_implements(yaconf_simple_ce TSRMLS_CC, 3, zend_ce_iterator, zend_ce_arrayaccess, spl_ce_Countable);

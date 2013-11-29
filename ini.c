@@ -28,6 +28,7 @@
 
 #include "php_yaconf.h"
 
+#include "abstract.h"
 #include "ini.h"
 
 zend_class_entry *yaconf_ini_ce;
@@ -292,8 +293,8 @@ static void yaconf_ini_parser_cb(zval *key, zval *value, zval *index, int callba
             }
         }
 
-        MAKE_STD_ZVAL(YAF_G(active_ini_file_section));
-        array_init(YAF_G(active_ini_file_section));
+        MAKE_STD_ZVAL(YACONF_G(active_ini_file_section));
+        array_init(YACONF_G(active_ini_file_section));
 
         if ((seg = strchr(skey, ':'))) {
             char *section, *p;
@@ -333,7 +334,7 @@ static void yaconf_ini_parser_cb(zval *key, zval *value, zval *index, int callba
             skey_len = strlen(skey);
         }
         zend_symtable_update(Z_ARRVAL_P(arr), skey, skey_len + 1, &YACONF_G(active_ini_file_section), sizeof(zval *), NULL);
-        if (YACONF_G(ini_wanted_section) && Z_STRLEN_P(YAF_G(ini_wanted_section)) == skey_len
+        if (YACONF_G(ini_wanted_section) && Z_STRLEN_P(YACONF_G(ini_wanted_section)) == skey_len
                 && !strncasecmp(Z_STRVAL_P(YACONF_G(ini_wanted_section)), skey, skey_len)) {
             YACONF_G(parsing_flag) = YACONF_INI_PARSING_PROCESS;
         }
@@ -903,7 +904,7 @@ ZEND_MINIT_FUNCTION(yaconf_ini) {
     zend_class_entry ce;
 
     INIT_CLASS_ENTRY(ce, "Yaconf_Ini", yaconf_ini_methods);
-    yaconf_ini_ce = zend_register_internal_class_ex(&ce, yaconf_ce, NULL TSRMLS_CC);
+    yaconf_ini_ce = zend_register_internal_class_ex(&ce, yaconf_abstract_ce, NULL TSRMLS_CC);
 
 #ifdef HAVE_SPL
     zend_class_implements(yaconf_ini_ce TSRMLS_CC, 3, zend_ce_iterator, zend_ce_arrayaccess, spl_ce_Countable);
