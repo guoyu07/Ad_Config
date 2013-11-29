@@ -265,7 +265,7 @@ static void ad_config_ini_simple_parser_cb(zval *key, zval *value, zval *index, 
 */
 static void ad_config_ini_parser_cb(zval *key, zval *value, zval *index, int callback_type, zval *arr TSRMLS_DC) {
 
-    if (AD_CONFIG_G(parsing_flag) == ad_config_INI_PARSING_END) {
+    if (AD_CONFIG_G(parsing_flag) == AD_CONFIG_INI_PARSING_END) {
         return;
     }
 
