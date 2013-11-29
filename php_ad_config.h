@@ -22,7 +22,7 @@
 #define PHP_AD_CONFIG_H
 
 extern zend_module_entry ad_config_module_entry;
-#define phpext_yaconf_ptr &ad_config_module_entry
+#define phpext_ad_config_ptr &ad_config_module_entry
 
 #ifdef PHP_WIN32
 #	define PHP_AD_CONFIG_API __declspec(dllexport)

@@ -352,7 +352,7 @@ zend_function_entry ad_config_methods[] = {
 
 /** {{{ ZEND_MINIT_FUNCTION
 */
-ZEND_MINIT_FUNCTION(yaconf_abstract) {
+ZEND_MINIT_FUNCTION(ad_config_abstract) {
         zend_class_entry ce;
 
         INIT_CLASS_ENTRY(ce, "Ad_Config_Abstract", ad_config_methods);
